@@ -5,12 +5,16 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.myapplication.TodoApplication
+import com.example.myapplication.ui.addedit.AddEditTaskViewModel
 import com.example.myapplication.ui.tasklist.TaskListViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             TaskListViewModel(todoApplication().taskRepository)
+        }
+        initializer {
+            AddEditTaskViewModel(todoApplication().taskRepository)
         }
     }
 }
