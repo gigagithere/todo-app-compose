@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.tasklist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -37,6 +38,7 @@ import com.example.myapplication.ui.AppViewModelProvider
 @Composable
 fun TaskListScreen(
     onAddTask: () -> Unit = {},
+    onEditTask: (Task) -> Unit = {},
     viewModel: TaskListViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -60,7 +62,7 @@ fun TaskListScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(items = uiState.tasks, key = { it.id }) { task ->
-                    TaskRow(task = task)
+                    TaskRow(task = task, onClick = { onEditTask(task) })
                 }
             }
         }
@@ -68,8 +70,11 @@ fun TaskListScreen(
 }
 
 @Composable
-private fun TaskRow(task: Task) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+private fun TaskRow(task: Task, onClick: () -> Unit) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .clickable(onClick = onClick)
+    ) {
         Row(
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically

@@ -1,6 +1,7 @@
 package com.example.myapplication.ui
 
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -14,7 +15,10 @@ object AppViewModelProvider {
             TaskListViewModel(todoApplication().taskRepository)
         }
         initializer {
-            AddEditTaskViewModel(todoApplication().taskRepository)
+            AddEditTaskViewModel(
+                savedStateHandle = createSavedStateHandle(),
+                repository = todoApplication().taskRepository
+            )
         }
     }
 }

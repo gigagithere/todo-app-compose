@@ -26,7 +26,9 @@ fun AddEditTaskScreen(
     viewModel: AddEditTaskViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Add Task") }) }
+        topBar = {
+            TopAppBar(title = { Text(if (viewModel.isEditMode) "Edit Task" else "Add Task") })
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
