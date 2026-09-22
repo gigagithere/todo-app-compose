@@ -18,12 +18,18 @@ object Routes {
 }
 
 @Composable
-fun AppNavHost(navController: NavHostController = rememberNavController()) {
+fun AppNavHost(
+    isDarkMode: Boolean,
+    onToggleDarkMode: () -> Unit,
+    navController: NavHostController = rememberNavController()
+) {
     NavHost(navController = navController, startDestination = Routes.TASK_LIST) {
         composable(Routes.TASK_LIST) {
             TaskListScreen(
                 onAddTask = { navController.navigate(Routes.ADD_EDIT_TASK_ADD) },
-                onEditTask = { task -> navController.navigate(Routes.editTask(task.id)) }
+                onEditTask = { task -> navController.navigate(Routes.editTask(task.id)) },
+                isDarkMode = isDarkMode,
+                onToggleDarkMode = onToggleDarkMode
             )
         }
         composable(

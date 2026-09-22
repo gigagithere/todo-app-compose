@@ -20,6 +20,9 @@ object AppViewModelProvider {
                 repository = todoApplication().taskRepository
             )
         }
+        initializer {
+            ThemeViewModel(todoApplication().userPreferencesRepository)
+        }
     }
 }
 
