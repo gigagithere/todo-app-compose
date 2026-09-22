@@ -14,8 +14,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.outlined.Circle
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -34,12 +36,18 @@ import com.example.myapplication.ui.AppViewModelProvider
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskListScreen(
+    onAddTask: () -> Unit = {},
     viewModel: TaskListViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Tasks") }) }
+        topBar = { TopAppBar(title = { Text("Tasks") }) },
+        floatingActionButton = {
+            FloatingActionButton(onClick = onAddTask) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add task")
+            }
+        }
     ) { innerPadding ->
         if (uiState.tasks.isEmpty()) {
             EmptyTaskList(modifier = Modifier.padding(innerPadding))
