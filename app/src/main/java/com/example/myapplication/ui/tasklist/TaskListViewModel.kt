@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 data class TaskListUiState(val tasks: List<Task> = emptyList())
 
@@ -20,4 +21,16 @@ class TaskListViewModel(private val repository: TaskRepository) : ViewModel() {
                 started = SharingStarted.WhileSubscribed(5_000L),
                 initialValue = TaskListUiState()
             )
+
+    fun toggleCompleted(task: Task) {
+        viewModelScope.launch {
+            repository.updateTask(task.copy(isCompleted = !task.isCompleted))
+        }
+    }
+
+    fun deleteTask(task: Task) {
+        viewModelScope.launch {
+            repository.deleteTask(task)
+        }
+    }
 }
