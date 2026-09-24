@@ -141,6 +141,11 @@ private fun TaskRow(
         }
     )
 
+    // A row re-inserted by Undo has the same key as the one just swiped away, so
+    // the saved swipe state can come back as "dismissed" and leave the row stuck
+    // off-screen. Every row starts settled.
+    LaunchedEffect(Unit) { dismissState.snapTo(SwipeToDismissBoxValue.Settled) }
+
     SwipeToDismissBox(
         state = dismissState,
         enableDismissFromStartToEnd = false,
